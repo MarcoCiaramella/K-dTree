@@ -20,14 +20,14 @@ Add the dependency
 
 ```
 dependencies {
-	        implementation 'com.github.MarcoCiaramella:K-dTree:1.0.0'
+	        implementation 'com.github.MarcoCiaramella:K-dTree:1.0.1'
 }
 ```
 
 ## How to use
 
 ```java
-KdTree kdTree = new KdTree(new Node(0,0),0);
+KdTree kdTree = new KdTree(new Node(0,0));
 kdTree.insert(new Node(1,2));
 kdTree.insert(new Node(-3,1));
 kdTree.insert(new Node(2,-2));
