@@ -1,0 +1,3 @@
+include ':kdtreelib'
+include ':app'
+rootProject.name = "K-d Tree"
