@@ -8,7 +8,11 @@ public class KdTree {
     private final int index;
     private Node parent;
 
-    public KdTree(Node root, int index){
+    public KdTree(Node root){
+        this(root,0);
+    }
+
+    private KdTree(Node root, int index){
         this.root = root;
         this.index = index;
         parent = null;

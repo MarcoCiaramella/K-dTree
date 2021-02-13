@@ -8,7 +8,7 @@ public class KdTreeTest {
 
     @Test
     public void insert_isCorrect(){
-        KdTree kdTree = new KdTree(new Node(0,0),0);
+        KdTree kdTree = new KdTree(new Node(0,0));
         kdTree.insert(new Node(1,2));
         assertArrayEquals(new float[]{0,0},kdTree.getRoot().getValues(),0);
         assertNotNull(kdTree.getSubtreeDx());
@@ -17,7 +17,7 @@ public class KdTreeTest {
 
     @Test
     public void searchNearest_isCorrect(){
-        KdTree kdTree = new KdTree(new Node(0,0),0);
+        KdTree kdTree = new KdTree(new Node(0,0));
         kdTree.insert(new Node(1,2));
         kdTree.insert(new Node(-3,1));
         kdTree.insert(new Node(2,-2));
