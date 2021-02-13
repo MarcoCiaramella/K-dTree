@@ -1,4 +1,7 @@
 # K-dTree
+
+[![](https://jitpack.io/v/MarcoCiaramella/K-dTree.svg)](https://jitpack.io/#MarcoCiaramella/K-dTree)
+
 An implementation of k-d tree as an Android library.
 
 ## How to import in your Android project
