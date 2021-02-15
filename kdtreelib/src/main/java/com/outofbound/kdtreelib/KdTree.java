@@ -53,7 +53,7 @@ public class KdTree {
             /*if (node.distance(root) < node.distance(best)){
                 best = root;
             }*/
-            if (node.get(index) * node.get(index) + root.get(index) * root.get(index) >= node.distance(best)) {
+            if ((node.get(index) - root.get(index)) * (node.get(index) - root.get(index)) >= node.distance(best)) {
                 return best;
             }
             else {
