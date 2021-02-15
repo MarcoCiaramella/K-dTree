@@ -20,7 +20,7 @@ public class KdTree {
 
     public void insert(Node node){
         if (node.size() != root.size()){
-            throw new RuntimeException("node dimension != root dimension.");
+            throwDimensionError();
         }
         if (node.get(index) < root.get(index)) {
             if (subtreeSx == null) {
@@ -42,34 +42,97 @@ public class KdTree {
     }
 
     public Node searchNearest(Node node){
+        return searchNearest(node,null);
+    }
+
+    private Node searchNearest(Node node, Node best){
         if (node.size() != root.size()){
-            throw new RuntimeException("node dimension != root dimension.");
+            throwDimensionError();
+        }
+        if (best != null){
+            /*if (node.distance(root) < node.distance(best)){
+                best = root;
+            }*/
+            if (node.get(index) * node.get(index) + root.get(index) * root.get(index) >= node.distance(best)) {
+                return best;
+            }
+            else {
+                return getBest(node,best,searchNearest(node,null));
+            }
         }
         if (node.get(index) < root.get(index)) {
-            if (subtreeSx == null) {
-                return getNearest(node,parent,root);
+            if (!hasSubtreeSx()) {
+                best = root;
+                if (hasSubtreeDx()){
+                    return subtreeDx.searchNearest(node,best);
+                }
+                return best;
             }
             else {
-                return subtreeSx.searchNearest(node);
+                Node bestSx = subtreeSx.searchNearest(node,best);
+                if (hasSubtreeDx()){
+                    return subtreeDx.searchNearest(node,bestSx);
+                }
+                return bestSx;
             }
         } else {
-            if (subtreeDx == null) {
-                return getNearest(node,parent,root);
+            if (!hasSubtreeDx()) {
+                best = root;
+                if (hasSubtreeSx()){
+                    return subtreeSx.searchNearest(node,best);
+                }
+                return best;
             }
             else {
-                return subtreeDx.searchNearest(node);
+                Node bestDx = subtreeDx.searchNearest(node,best);
+                if (hasSubtreeSx()){
+                    return subtreeSx.searchNearest(node,bestDx);
+                }
+                return bestDx;
             }
         }
     }
 
-    private Node getNearest(Node node, Node root, Node leaf){
-        float dist1 = node.distance(root);
-        float dist2 = node.distance(leaf);
-        if (dist1 < dist2){
-            return root;
+    private boolean hasSubtreeSx(){
+        return subtreeSx != null;
+    }
+
+    private boolean hasSubtreeDx(){
+        return subtreeDx != null;
+    }
+
+    private Node getBest(Node node, Node node1, Node node2){
+        if (node.distance(node1) < node.distance(node2)){
+            return node1;
         }
-        else {
-            return leaf;
+        return node2;
+    }
+
+    public Node searchNearestFast(Node node){
+        return searchNearestFast(node,root);
+    }
+
+    private Node searchNearestFast(Node node, Node best){
+        if (node.size() != root.size()){
+            throwDimensionError();
+        }
+        if (node.distance(root) < node.distance(best)){
+            best = root;
+        }
+        if (node.get(index) < root.get(index)) {
+            if (subtreeSx == null) {
+                return best;
+            }
+            else {
+                return subtreeSx.searchNearestFast(node,best);
+            }
+        } else {
+            if (subtreeDx == null) {
+                return best;
+            }
+            else {
+                return subtreeDx.searchNearestFast(node,best);
+            }
         }
     }
 
@@ -87,5 +150,9 @@ public class KdTree {
 
     public KdTree getSubtreeDx() {
         return subtreeDx;
+    }
+
+    private void throwDimensionError(){
+        throw new RuntimeException("node dimension != root dimension.");
     }
 }

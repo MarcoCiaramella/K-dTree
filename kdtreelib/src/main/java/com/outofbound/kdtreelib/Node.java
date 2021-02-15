@@ -42,6 +42,6 @@ public class Node {
         for (float value : values){
             sum += value*value;
         }
-        return (float)Math.sqrt(sum);
+        return sum;
     }
 }
