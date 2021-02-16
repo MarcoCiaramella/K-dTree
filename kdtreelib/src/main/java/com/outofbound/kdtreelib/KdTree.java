@@ -91,34 +91,6 @@ public class KdTree {
         return node2;
     }
 
-    public Node searchNearestFast(Node node){
-        return searchNearestFast(node,root);
-    }
-
-    private Node searchNearestFast(Node node, Node best){
-        if (node.size() != root.size()){
-            throwDimensionError();
-        }
-        if (node.distance(root) < node.distance(best)){
-            best = root;
-        }
-        if (node.get(index) < root.get(index)) {
-            if (subtreeSx == null) {
-                return best;
-            }
-            else {
-                return subtreeSx.searchNearestFast(node,best);
-            }
-        } else {
-            if (subtreeDx == null) {
-                return best;
-            }
-            else {
-                return subtreeDx.searchNearestFast(node,best);
-            }
-        }
-    }
-
     private int nextIndex(int index){
         return (index + 1) % root.size();
     }
