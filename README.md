@@ -20,7 +20,7 @@ Add the dependency
 
 ```
 dependencies {
-	        implementation 'com.github.MarcoCiaramella:K-dTree:1.0.1'
+	        implementation 'com.github.MarcoCiaramella:K-dTree:1.0.0'
 }
 ```
 
