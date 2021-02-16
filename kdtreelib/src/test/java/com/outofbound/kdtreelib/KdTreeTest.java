@@ -11,7 +11,7 @@ import static org.junit.Assert.assertNotNull;
 
 public class KdTreeTest {
 
-    private static Random random = new Random();
+    private static final Random random = new Random();
 
     private static float mapValue(float val, float min, float max){
         return min+(max - min)*val;

@@ -6,7 +6,6 @@ public class KdTree {
     private KdTree subtreeDx;
     private final Node root;
     private final int index;
-    private Node parent;
 
     public KdTree(Node root){
         this(root,0);
@@ -15,7 +14,6 @@ public class KdTree {
     private KdTree(Node root, int index){
         this.root = root;
         this.index = index;
-        parent = null;
     }
 
     public void insert(Node node){
@@ -25,7 +23,6 @@ public class KdTree {
         if (node.get(index) < root.get(index)) {
             if (subtreeSx == null) {
                 subtreeSx = new KdTree(node,nextIndex(index));
-                subtreeSx.parent = root;
             }
             else {
                 subtreeSx.insert(node);
@@ -33,7 +30,6 @@ public class KdTree {
         } else {
             if (subtreeDx == null) {
                 subtreeDx = new KdTree(node,nextIndex(index));
-                subtreeDx.parent = root;
             }
             else {
                 subtreeDx.insert(node);
