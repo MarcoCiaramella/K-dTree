@@ -2,10 +2,28 @@ package com.outofbound.kdtreelib;
 
 
 import org.junit.Test;
+
+import java.util.ArrayList;
+import java.util.Random;
+
 import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertNotNull;
 
 public class KdTreeTest {
+
+    private static Random random = new Random();
+
+    private static float mapValue(float val, float min, float max){
+        return min+(max - min)*val;
+    }
+
+    private static float randomFloat(float min, float max){
+        return mapValue(random.nextFloat(),min,max);
+    }
+
+    private static Node randomNode(){
+        return new Node(randomFloat(-1,1),randomFloat(-1,1));
+    }
 
     @Test
     public void insert_isCorrect(){
@@ -44,5 +62,25 @@ public class KdTreeTest {
         kdTree.insert(new Node(-3,2));
         Node nearest = kdTree.searchNearest(new Node(-4,1));
         assertArrayEquals(new float[]{-3,1},nearest.getValues(),0);
+    }
+
+    @Test
+    public void searchNearest3_isCorrect(){
+        KdTree kdTree = new KdTree(randomNode());
+        Node queryNode = randomNode();
+        ArrayList<Node> nodes = new ArrayList<>();
+        for (int i = 0; i < 1000; i++){
+            Node node = randomNode();
+            kdTree.insert(node);
+            nodes.add(node);
+        }
+        Node nearestKdTree = kdTree.searchNearest(queryNode);
+        Node nearestList = nodes.get(0);
+        for (Node node : nodes){
+            if (queryNode.distance(node) < queryNode.distance(nearestList)){
+                nearestList = node;
+            }
+        }
+        assertArrayEquals(nearestList.getValues(),nearestKdTree.getValues(),0);
     }
 }
