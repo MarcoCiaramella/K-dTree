@@ -42,53 +42,40 @@ public class KdTree {
     }
 
     public Node searchNearest(Node node){
-        return searchNearest(node,null);
-    }
-
-    private Node searchNearest(Node node, Node best){
         if (node.size() != root.size()){
             throwDimensionError();
         }
-        if (best != null){
-            /*if (node.distance(root) < node.distance(best)){
-                best = root;
-            }*/
-            if ((node.get(index) - root.get(index)) * (node.get(index) - root.get(index)) >= node.distance(best)) {
-                return best;
-            }
-            else {
-                return getBest(node,best,searchNearest(node,null));
-            }
-        }
         if (node.get(index) < root.get(index)) {
             if (!hasSubtreeSx()) {
-                best = root;
+                Node bestSx = root;
                 if (hasSubtreeDx()){
-                    return subtreeDx.searchNearest(node,best);
-                }
-                return best;
-            }
-            else {
-                Node bestSx = subtreeSx.searchNearest(node,best);
-                if (hasSubtreeDx()){
-                    return subtreeDx.searchNearest(node,bestSx);
+                    return getBest(node,bestSx,subtreeDx.searchNearest(node));
                 }
                 return bestSx;
             }
+            else {
+                Node bestSx = subtreeSx.searchNearest(node);
+                if (hasSubtreeDx() && (node.get(index) - root.get(index)) * (node.get(index) - root.get(index)) < node.distance(bestSx)) {
+                    Node bestDx = subtreeDx.searchNearest(node);
+                    return getBest(node,root,getBest(node,bestSx,bestDx));
+                }
+                return getBest(node,root,bestSx);
+            }
         } else {
             if (!hasSubtreeDx()) {
-                best = root;
+                Node bestDx = root;
                 if (hasSubtreeSx()){
-                    return subtreeSx.searchNearest(node,best);
-                }
-                return best;
-            }
-            else {
-                Node bestDx = subtreeDx.searchNearest(node,best);
-                if (hasSubtreeSx()){
-                    return subtreeSx.searchNearest(node,bestDx);
+                    return getBest(node,bestDx,subtreeSx.searchNearest(node));
                 }
                 return bestDx;
+            }
+            else {
+                Node bestDx = subtreeDx.searchNearest(node);
+                if (hasSubtreeSx() && (node.get(index) - root.get(index)) * (node.get(index) - root.get(index)) < node.distance(bestDx)) {
+                    Node bestSx = subtreeSx.searchNearest(node);
+                    return getBest(node,root,getBest(node,bestDx,bestSx));
+                }
+                return getBest(node,root,bestDx);
             }
         }
     }
