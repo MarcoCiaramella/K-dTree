@@ -37,7 +37,7 @@ public class KdTree {
         }
     }
 
-    public Node searchNearest(Node node){
+    public Node searchNearestNeighbour(Node node){
         if (node.size() != root.size()){
             throwDimensionError();
         }
@@ -45,14 +45,14 @@ public class KdTree {
             if (!hasSubtreeSx()) {
                 Node bestSx = root;
                 if (hasSubtreeDx()){
-                    return getBest(node,bestSx,subtreeDx.searchNearest(node));
+                    return getBest(node,bestSx,subtreeDx.searchNearestNeighbour(node));
                 }
                 return bestSx;
             }
             else {
-                Node bestSx = subtreeSx.searchNearest(node);
+                Node bestSx = subtreeSx.searchNearestNeighbour(node);
                 if (hasSubtreeDx() && (node.get(index) - root.get(index)) * (node.get(index) - root.get(index)) < node.distance(bestSx)) {
-                    Node bestDx = subtreeDx.searchNearest(node);
+                    Node bestDx = subtreeDx.searchNearestNeighbour(node);
                     return getBest(node,root,getBest(node,bestSx,bestDx));
                 }
                 return getBest(node,root,bestSx);
@@ -61,14 +61,14 @@ public class KdTree {
             if (!hasSubtreeDx()) {
                 Node bestDx = root;
                 if (hasSubtreeSx()){
-                    return getBest(node,bestDx,subtreeSx.searchNearest(node));
+                    return getBest(node,bestDx,subtreeSx.searchNearestNeighbour(node));
                 }
                 return bestDx;
             }
             else {
-                Node bestDx = subtreeDx.searchNearest(node);
+                Node bestDx = subtreeDx.searchNearestNeighbour(node);
                 if (hasSubtreeSx() && (node.get(index) - root.get(index)) * (node.get(index) - root.get(index)) < node.distance(bestDx)) {
-                    Node bestSx = subtreeSx.searchNearest(node);
+                    Node bestSx = subtreeSx.searchNearestNeighbour(node);
                     return getBest(node,root,getBest(node,bestDx,bestSx));
                 }
                 return getBest(node,root,bestDx);

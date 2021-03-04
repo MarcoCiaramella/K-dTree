@@ -42,7 +42,7 @@ public class KdTreeTest {
         kdTree.insert(new Node(2,-2));
         kdTree.insert(new Node(4,9));
         kdTree.insert(new Node(-5,12));
-        Node nearest = kdTree.searchNearest(new Node(-4,1));
+        Node nearest = kdTree.searchNearestNeighbour(new Node(-4,1));
         assertArrayEquals(new float[]{-3,1},nearest.getValues(),0);
     }
 
@@ -60,7 +60,7 @@ public class KdTreeTest {
         kdTree.insert(new Node(200,-500));
         kdTree.insert(new Node(-3,-1));
         kdTree.insert(new Node(-3,2));
-        Node nearest = kdTree.searchNearest(new Node(-4,1));
+        Node nearest = kdTree.searchNearestNeighbour(new Node(-4,1));
         assertArrayEquals(new float[]{-3,1},nearest.getValues(),0);
     }
 
@@ -74,7 +74,7 @@ public class KdTreeTest {
             kdTree.insert(node);
             nodes.add(node);
         }
-        Node nearestKdTree = kdTree.searchNearest(queryNode);
+        Node nearestKdTree = kdTree.searchNearestNeighbour(queryNode);
         Node nearestList = nodes.get(0);
         for (Node node : nodes){
             if (queryNode.distance(node) < queryNode.distance(nearestList)){

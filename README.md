@@ -33,5 +33,5 @@ kdTree.insert(new Node(-3,1));
 kdTree.insert(new Node(2,-2));
 kdTree.insert(new Node(4,9));
 kdTree.insert(new Node(-5,12));
-Node nearest = kdTree.searchNearest(new Node(-4,1));
+Node nearest = kdTree.searchNearestNeighbour(new Node(-4,1));
 ```
